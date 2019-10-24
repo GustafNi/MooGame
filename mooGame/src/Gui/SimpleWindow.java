@@ -1,3 +1,5 @@
+package Gui;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -51,7 +53,7 @@ public class SimpleWindow  {
 		
 		sPanel.add(inString,BorderLayout.CENTER);
 		sPanel.add(go,BorderLayout.EAST);
-		window.setSize(350,800);
+		window.setSize(350,500);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setLocationByPlatform(true);
 		window.setVisible(true);
