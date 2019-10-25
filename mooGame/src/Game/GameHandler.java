@@ -3,7 +3,7 @@ package Game;
 
 
 import DataBase.DataBaseDAO;
-import DataBase.DbHandler;
+import DataBase.JDBCHandler;
 import Game.GameLogic;
 import Gui.SimpleWindow;
 import javax.swing.*;
@@ -28,7 +28,7 @@ public class GameHandler {
         // login
         simplewindow.addString("Enter your user name:\n");
         String name = simplewindow.getString();
-        int id = dataBaseDAO.getPlayerName(name);
+        int id = dataBaseDAO.getPlayerId(name);
         if(id == 0) {
             simplewindow.addString("User not in database, please register with admin");
             Thread.sleep(5000);
@@ -57,7 +57,7 @@ public class GameHandler {
                 simplewindow.addString(bbcc + "\n");
             }
             dataBaseDAO.insertIntoResults(nGuess, id);
-             showTopTen();
+             showTopTen(id);
             answer = JOptionPane.showConfirmDialog(null, "Correct, it took " + nGuess
                     + " guesses\nContinue?");
 
@@ -65,26 +65,15 @@ public class GameHandler {
         simplewindow.exit();
     }
 
-    public void showTopTen() throws SQLException {
+    public void showTopTen(int id) throws SQLException {
         ArrayList<GameLogic.PlayerAverage> topList = new ArrayList<>();
-        Statement stmt2 = connection.createStatement();
-        ResultSet rs2;
-        rs = stmt.executeQuery("select * from players");
-        while(rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            rs2 = stmt2.executeQuery("select * from results where player = "+ id );
-            int nGames = 0;
-            int totalGuesses = 0;
-            while (rs2.next()) {
-                nGames++;
-                totalGuesses += rs2.getInt("result");
+        int nGames = dataBaseDAO.getResults();
+        if (nGames > 0) {
+            String playerName = dataBaseDAO.getPlayerName(id);
+            int noOfGuesses = dataBaseDAO.noOfGuesses(id);
+            int noOfPlayedGames = dataBaseDAO.noOfPlayedGames(id);
+                topList.add(new GameLogic.PlayerAverage(playerName, (double)noOfGuesses/noOfPlayedGames));
             }
-            if (nGames > 0) {
-                topList.add(new GameLogic.PlayerAverage(name, (double)totalGuesses/nGames));
-            }
-
-        }
         simplewindow.addString("Top Ten List\n    Player     Average\n");
         int pos = 1;
         topList.sort((p1,p2)->(Double.compare(p1.average, p2.average)));

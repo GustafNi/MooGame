@@ -1,7 +1,7 @@
 package Game;
 
 import DataBase.DataBaseDAO;
-import DataBase.DbHandler;
+import DataBase.JDBCHandler;
 import Gui.SimpleWindow;
 import java.sql.SQLException;
 
@@ -16,7 +16,7 @@ public class Moo {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, InterruptedException {
 		gw = new SimpleWindow("Moo");
-                dBDAO = new DbHandler();
+                dBDAO = new JDBCHandler();
                 gameLogic = new GameLogic();
 		int answer = JOptionPane.YES_OPTION;
 		GameHandler dbLogin = new GameHandler(gw, gameLogic, dBDAO);
