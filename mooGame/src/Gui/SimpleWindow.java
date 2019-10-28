@@ -1,3 +1,5 @@
+package Gui;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,7 +20,7 @@ import javax.swing.KeyStroke;
 
 
 
-public class SimpleWindow  {
+public class SimpleWindow implements UserInterfaceDAO  {
 	private JFrame window;
 	private JTextArea text;
 	private JTextField inString;
@@ -51,7 +53,7 @@ public class SimpleWindow  {
 		
 		sPanel.add(inString,BorderLayout.CENTER);
 		sPanel.add(go,BorderLayout.EAST);
-		window.setSize(350,800);
+		window.setSize(350,500);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setLocationByPlatform(true);
 		window.setVisible(true);
@@ -69,6 +71,7 @@ public class SimpleWindow  {
 		}		
 	}
 	
+    @Override
 	public String getString(){
 		
 		try {
@@ -79,14 +82,17 @@ public class SimpleWindow  {
 		}
 	}
 	
+    @Override
 	public void addString(String s){
 		text.append(s);
 	}
 	
+    @Override
 	public void clear(){
 		text.setText("");
 	}
 	
+    @Override
 	public void exit() {
 		window.dispose();
 		System.exit(0);
