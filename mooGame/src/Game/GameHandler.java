@@ -6,20 +6,21 @@ import DataBase.DataBaseDAO;
 import DataBase.JDBCHandler;
 import Game.GameLogic;
 import Gui.SimpleWindow;
+import Gui.UserInterfaceDAO;
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class GameHandler {
-    SimpleWindow simplewindow;
+    UserInterfaceDAO simplewindow;
     GameLogic gameLogic;
     DataBaseDAO dataBaseDAO;
     static Connection connection;
     static Statement stmt;
     static ResultSet rs;
 
-    public GameHandler(SimpleWindow simplewindow, GameLogic gameLogic, DataBaseDAO dataBaseDAO) {
-        this.simplewindow = simplewindow;
+    public GameHandler(UserInterfaceDAO userInterfaceDAO, GameLogic gameLogic, DataBaseDAO dataBaseDAO) {
+        this.simplewindow = userInterfaceDAO;
         this.gameLogic = gameLogic;
         this.dataBaseDAO = dataBaseDAO;
     }
@@ -39,6 +40,7 @@ public class GameHandler {
 
     public void execute(int answer, int id) throws SQLException {
         while (answer == JOptionPane.YES_OPTION) {
+            ArrayList<PlayerAverage> topList = new ArrayList();
             String goal = gameLogic.makeGoal();
             simplewindow.clear();
             simplewindow.addString("New game:\n");
@@ -57,30 +59,22 @@ public class GameHandler {
                 simplewindow.addString(bbcc + "\n");
             }
             dataBaseDAO.insertIntoResults(nGuess, id);
-             showTopTen(id);
+            topList = dataBaseDAO.getTopTenResults(topList);
+            showHiScore(topList);
             answer = JOptionPane.showConfirmDialog(null, "Correct, it took " + nGuess
                     + " guesses\nContinue?");
-
         }
         simplewindow.exit();
     }
 
-    public void showTopTen(int id) throws SQLException {
-        ArrayList<GameLogic.PlayerAverage> topList = new ArrayList<>();
-        int nGames = dataBaseDAO.getResults();
-        if (nGames > 0) {
-            String playerName = dataBaseDAO.getPlayerName(id);
-            int noOfGuesses = dataBaseDAO.noOfGuesses(id);
-            int noOfPlayedGames = dataBaseDAO.noOfPlayedGames(id);
-                topList.add(new GameLogic.PlayerAverage(playerName, (double)noOfGuesses/noOfPlayedGames));
-            }
-        simplewindow.addString("Top Ten List\n    Player     Average\n");
+    public void showHiScore(ArrayList<PlayerAverage> topList) {
+         simplewindow.addString("Top Ten List\n    Player     Average\n");
         int pos = 1;
         topList.sort((p1,p2)->(Double.compare(p1.average, p2.average)));
-        for (GameLogic.PlayerAverage p : topList) {
+        for (PlayerAverage p : topList) {
             simplewindow.addString(String.format("%3d %-10s%5.2f%n", pos, p.name, p.average));
             if (pos++ == 10) break;
         }
-
     }
+    
 }

@@ -3,6 +3,7 @@ package Game;
 import DataBase.DataBaseDAO;
 import DataBase.JDBCHandler;
 import Gui.SimpleWindow;
+import Gui.UserInterfaceDAO;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -10,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class Moo {
 	
-	static SimpleWindow gw;
+	static UserInterfaceDAO gw;
 	static GameLogic gameLogic;
         static DataBaseDAO dBDAO;
 

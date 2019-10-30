@@ -1,8 +1,12 @@
 package DataBase;
 
+import Game.GameLogic;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface DataBaseDAO {
+
+    ArrayList getTopTenResults(ArrayList topList) throws SQLException;
 
     int getPlayerId(String name) throws ClassNotFoundException, SQLException;
     

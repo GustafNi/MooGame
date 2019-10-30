@@ -2,11 +2,13 @@
 package DataBase;
 
 import Game.GameLogic;
+import Game.PlayerAverage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
@@ -53,7 +55,6 @@ public class JDBCHandler implements DataBaseDAO {
                 nGames++;
                 totalGuesses += rs2.getInt("result");
             }
-           
         }
         return nGames;
     }
@@ -85,4 +86,26 @@ public class JDBCHandler implements DataBaseDAO {
         }
         return noOfGames;
     }
+    @Override
+    public ArrayList getTopTenResults(ArrayList topList) throws SQLException {
+        Statement stmt2 = connection.createStatement();
+	ResultSet rs2;
+	rs = stmt.executeQuery("select * from players");
+	while(rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            rs2 = stmt2.executeQuery("select * from results where player = "+ id );
+            int nGames = 0;
+            int totalGuesses = 0;
+            while (rs2.next()) {
+		nGames++;
+		totalGuesses += rs2.getInt("result");
+            }
+            if (nGames > 0) {
+		topList.add(new PlayerAverage(name, (double)totalGuesses/nGames));
+            }    
+			
+	}
+    return topList;
+    } 
 }
