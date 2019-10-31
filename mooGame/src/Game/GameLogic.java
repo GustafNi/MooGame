@@ -1,11 +1,12 @@
 package Game;
 
-public class GameLogic {
+public class GameLogic implements GameLogicDAO {
 
     public GameLogic() {
 
     }
 
+    @Override
     public String makeGoal(){
         String goal = "";
         for (int i = 0; i < 4; i++){
@@ -20,6 +21,7 @@ public class GameLogic {
         return goal;
     }
 
+    @Override
     public String checkBC(String goal, String guess) {
         int cows = 0, bulls = 0;
         for (int i = 0; i < 4; i++){
@@ -42,10 +44,5 @@ public class GameLogic {
             result = result + "C";
         }
         return result;
-
     }
-    class PlayerAverage {
-       
-    }
-
 }

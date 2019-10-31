@@ -1,22 +1,14 @@
 package DataBase;
 
-import Game.GameLogic;
-import java.sql.SQLException;
+import DataBase.JDBCHandler.PlayerAverage;
 import java.util.ArrayList;
 
 public interface DataBaseDAO {
 
-    ArrayList getTopTenResults(ArrayList topList) throws SQLException;
+    ArrayList<PlayerAverage> getTopTenResults() throws RuntimeException;
 
-    int getPlayerId(String name) throws ClassNotFoundException, SQLException;
+    int getPlayerId(String name) throws IllegalArgumentException;
+  
+    void insertIntoResults(int nGuess, int id)throws IllegalArgumentException;
     
-    String getPlayerName(int id) throws SQLException;
-    
-    int noOfGuesses(int id) throws SQLException;
-    
-    int noOfPlayedGames(int id) throws SQLException;
-    
-    void insertIntoResults(int nGuess, int id)throws SQLException;
-    
-    int getResults() throws SQLException;
 }
