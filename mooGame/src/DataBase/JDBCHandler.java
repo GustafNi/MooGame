@@ -57,18 +57,18 @@ public class JDBCHandler implements DataBaseDAO {
     public ArrayList<PlayerAverage> getTopTenResults() throws RuntimeException {
         try {
             ArrayList<PlayerAverage> topList = new ArrayList();
-            Statement stmt2 = connection.createStatement();
-            ResultSet rs2;
+            Statement resultStatement = connection.createStatement();
+            ResultSet resultSetScore;
             rs = stmt.executeQuery("select * from players");
             while(rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
-                rs2 = stmt2.executeQuery("select * from results where player = "+ id );
+                resultSetScore = resultStatement.executeQuery("select * from results where player = "+ id );
                 int nGames = 0;
                 int totalGuesses = 0;
-                while (rs2.next()) {
+                while (resultSetScore.next()) {
                     nGames++;
-                    totalGuesses += rs2.getInt("result");
+                    totalGuesses += resultSetScore.getInt("result");
                 }
                 if (nGames > 0) {
                     topList.add(new PlayerAverage(name, (double)totalGuesses/nGames));

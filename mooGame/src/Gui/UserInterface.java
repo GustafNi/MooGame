@@ -1,6 +1,6 @@
 package Gui;
 
-public interface UserInterfaceDAO {
+public interface UserInterface {
 
     void addString(String s);
 

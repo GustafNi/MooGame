@@ -6,7 +6,7 @@
 package Game;
 
 
-public interface GameLogicDAO {
+public interface LogicContent {
 
     String checkBC(String goal, String guess);
 

@@ -20,7 +20,7 @@ import javax.swing.KeyStroke;
 
 
 
-public class SimpleWindow implements UserInterfaceDAO  {
+public class SimpleWindow implements UserInterface  {
 	private JFrame window;
 	private JTextArea text;
 	private JTextField inString;

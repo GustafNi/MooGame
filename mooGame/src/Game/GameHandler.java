@@ -2,18 +2,18 @@ package Game;
 
 import DataBase.DataBaseDAO;
 import DataBase.JDBCHandler.PlayerAverage;
-import Gui.UserInterfaceDAO;
 import javax.swing.*;
 import java.util.ArrayList;
+import Gui.UserInterface;
 
 public class GameHandler {
-    UserInterfaceDAO gameWindow;
-    GameLogicDAO gameLogic;
+    UserInterface gameWindow;
+    LogicContent gameLogic;
     DataBaseDAO dataBaseDAO;
 
-    public GameHandler(UserInterfaceDAO userInterfaceDAO, GameLogicDAO gameLogicDAO, DataBaseDAO dataBaseDAO) {
-        this.gameWindow = userInterfaceDAO;
-        this.gameLogic = gameLogicDAO;
+    public GameHandler(UserInterface userInterface, LogicContent gameLogic, DataBaseDAO dataBaseDAO) {
+        this.gameWindow = userInterface;
+        this.gameLogic = gameLogic;
         this.dataBaseDAO = dataBaseDAO;
     }
 

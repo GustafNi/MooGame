@@ -1,8 +1,8 @@
 package Game;
 
-public class GameLogic implements GameLogicDAO {
+public class MooGameLogic implements LogicContent {
 
-    public GameLogic() {
+    public MooGameLogic() {
 
     }
 
